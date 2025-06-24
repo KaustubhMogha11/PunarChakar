@@ -6,16 +6,28 @@ const __dirname = path.resolve();
 
 // Email configuration
 
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: "punarchakar@gmail.com",
+//     pass: "ogvk sswg vgen mjcn",
+//   },
+//   tls: {
+//     rejectUnauthorized: false
+// }
+// });
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtpout.secureserver.net",
+  port: 465,
+  secure: true, 
   auth: {
-    user: "punarchakar@gmail.com",
-    pass: "ogvk sswg vgen mjcn",
+    user: 'info@punarchakar.com',
+    pass: 'Punar@321',
   },
   tls: {
     rejectUnauthorized: false
 }
-
 });
 
 export async function sendInvoiceEmail(customerData, confirmationDetails) {
@@ -34,8 +46,9 @@ export async function sendInvoiceEmail(customerData, confirmationDetails) {
         }
 
         const mailOptions = {
-            from: '"PunarChakar" <punarchakar@gmail.com>',
+            from: '"PunarChakar" <info@punarchakar.com>',
             to: customerData.email,
+            bcc: 'info@punarchakar.com',
             subject: `Your Order #${confirmationDetails?.confirmationNumber} - Order Confirmation`,
             text: `Dear Valued Customer,\n\nThank you for your order! Your order has been successfully placed.\n\nPlease find attached order details for reference.\n\nOrder Details:\nMaterial Type: ${customerData.material}\nQuantity: ${customerData.quantity}\nTotal Amount: Rs.${customerData?.totalPrice?.toFixed(2)}\n\nIf you have any questions, please contact our support team.\n\nBest regards,\nPunarChakar Team`,
             html: `
@@ -181,8 +194,9 @@ export async function sendSelfConfirmationMail(customerData, confirmationDetails
 
 
         const mailOptions = {
-            from: '"PunarChakar" <punarchakar@gmail.com>',
+            from: '"PunarChakar" <info@punarchakar.com>',
             to: 'punarchakar@gmail.com',
+            cc: 'info@punarchakar.com',
             subject: `Order #${confirmationDetails?.confirmationNumber} - Order Confirmation`,
             text: textBody,
             html:htmlBody,
