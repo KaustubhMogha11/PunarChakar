@@ -76,13 +76,13 @@ export async function sendInvoiceEmail(customerData, confirmationDetails) {
                 {
                     filename: 'punarchakr_logo_white.png',
                     path: './public/punarchakr_logo_white.png',
-                    cid: 'punarchakarlogo' // Must match `cid:` in HTML
+                    cid: 'punarchakarlogo' 
                 }
             ]
         };
 
         await transporter.sendMail(mailOptions);
-        console.log(`Email sent to ${customerData.email} with Order info: ${confirmationDetails.fileName}`);
+        // console.log(`Email sent to ${customerData.email} with Order info: ${confirmationDetails.fileName}`);
         return true;
     } catch (error) {
         console.error('Error sending email:', error);
@@ -171,6 +171,12 @@ export async function sendSelfConfirmationMail(customerData, confirmationDetails
 
             <p>Please find the attached PDF for your reference.</p>
             <p>- Team PunarChakar</p>
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #666;">
+                <img src="cid:punarchakarlogo" alt="PunarChakar Logo" style="width: 120px; height: auto; margin-top: 10px;">
+                <p>PunarChakar Battery Recycling Solutions</p>
+                <p>New Delhi, 122001, India</p>
+                <p>Email: info@punarchakar.com</p>
+            </div>
             `;
 
 
@@ -179,18 +185,23 @@ export async function sendSelfConfirmationMail(customerData, confirmationDetails
             to: 'punarchakar@gmail.com',
             subject: `Order #${confirmationDetails?.confirmationNumber} - Order Confirmation`,
             text: textBody,
-             html:htmlBody,
+            html:htmlBody,
             attachments: [
                 {
                     filename: confirmationDetails.fileName,
                     path: confirmationDetails.filePath,
                     contentType: 'application/pdf'
+                },
+                {
+                    filename: 'punarchakr_logo_white.png',
+                    path: './public/punarchakr_logo_white.png',
+                    cid: 'punarchakarlogo' 
                 }
             ]
         };
 
         await transporter.sendMail(mailOptions);
-        console.log(`Email sent to self ${customerData.email} with Order info: ${confirmationDetails.fileName}`);
+        // console.log(`Email sent to self ${customerData.email} with Order info: ${confirmationDetails.fileName}`);
         return true;
     } catch (error) {
         console.error('Error sending email:', error);
@@ -198,21 +209,21 @@ export async function sendSelfConfirmationMail(customerData, confirmationDetails
     }
 }
 
-let customerData = {
-    company: "PunarChakar Pvt Ltd",
-    mobile: "9876543210",
-    email: "ashunegi880@gmail.com",
-    material: "battery_scrap",
-    battery_type: "lco-s",
-    quantity: 15,
-    totalPrice: 1800.00,
-    enquiry: "Please arrange pickup for the battery scrap."
-}
+// let customerData = {
+//     company: "PunarChakar Pvt Ltd",
+//     mobile: "9876543210",
+//     email: "ashunegi880@gmail.com",
+//     material: "battery_scrap",
+//     battery_type: "lco-s",
+//     quantity: 15,
+//     totalPrice: 1800.00,
+//     enquiry: "Please arrange pickup for the battery scrap."
+// }
 
-let confirmationDetails = {
-    fileName: "MaterialInfo.pdf",
-    filePath: "MaterialInfo.pdf",
-    confirmationNumber: "240920-123456"
-}
+// let confirmationDetails = {
+//     fileName: "MaterialInfo.pdf",
+//     filePath: "MaterialInfo.pdf",
+//     confirmationNumber: "240920-123456"
+// }
 
 // sendSelfConfirmationMail(customerData, confirmationDetails)
